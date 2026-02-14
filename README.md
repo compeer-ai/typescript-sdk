@@ -29,7 +29,7 @@ const client = new Barque({
   apiKey: process.env['BARQUE_API_KEY'], // This is the default and can be omitted
 });
 
-const response = await client.projects.readAll();
+const response = await client.captures.search({ projectId: 'projectId', query: 'query' });
 ```
 
 ### Request & Response types
@@ -223,7 +223,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.projects.readAll({
+client.captures.search({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',
