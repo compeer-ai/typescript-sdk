@@ -17,15 +17,13 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import {
-  Test,
-  TestCreateCaptureParams,
-  TestCreateCaptureResponse,
-  TestListProjectsResponse,
-  TestRetrieveOpenAPIResponse,
-  TestRetrieveUserResponse,
-  TestSearchCapturesParams,
-  TestSearchCapturesResponse,
-} from './resources/test';
+  CaptureCreateParams,
+  CaptureCreateResponse,
+  CaptureSearchParams,
+  CaptureSearchResponse,
+  Captures,
+} from './resources/captures';
+import { ProjectReadAllResponse, Projects } from './resources/projects';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -736,22 +734,23 @@ export class Barque {
 
   static toFile = Uploads.toFile;
 
-  test: API.Test = new API.Test(this);
+  projects: API.Projects = new API.Projects(this);
+  captures: API.Captures = new API.Captures(this);
 }
 
-Barque.Test = Test;
+Barque.Projects = Projects;
+Barque.Captures = Captures;
 
 export declare namespace Barque {
   export type RequestOptions = Opts.RequestOptions;
 
+  export { Projects as Projects, type ProjectReadAllResponse as ProjectReadAllResponse };
+
   export {
-    Test as Test,
-    type TestCreateCaptureResponse as TestCreateCaptureResponse,
-    type TestListProjectsResponse as TestListProjectsResponse,
-    type TestRetrieveOpenAPIResponse as TestRetrieveOpenAPIResponse,
-    type TestRetrieveUserResponse as TestRetrieveUserResponse,
-    type TestSearchCapturesResponse as TestSearchCapturesResponse,
-    type TestCreateCaptureParams as TestCreateCaptureParams,
-    type TestSearchCapturesParams as TestSearchCapturesParams,
+    Captures as Captures,
+    type CaptureCreateResponse as CaptureCreateResponse,
+    type CaptureSearchResponse as CaptureSearchResponse,
+    type CaptureCreateParams as CaptureCreateParams,
+    type CaptureSearchParams as CaptureSearchParams,
   };
 }

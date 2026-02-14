@@ -1,12 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 export {
-  Test,
-  type TestCreateCaptureResponse,
-  type TestListProjectsResponse,
-  type TestRetrieveOpenAPIResponse,
-  type TestRetrieveUserResponse,
-  type TestSearchCapturesResponse,
-  type TestCreateCaptureParams,
-  type TestSearchCapturesParams,
-} from './test';
+  Captures,
+  type CaptureCreateResponse,
+  type CaptureSearchResponse,
+  type CaptureCreateParams,
+  type CaptureSearchParams,
+} from './captures';
+export { Projects, type ProjectReadAllResponse } from './projects';
