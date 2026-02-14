@@ -7,10 +7,10 @@ const client = new Barque({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource v1', () => {
+describe('resource test', () => {
   // Prism tests are disabled
   test.skip('createCapture: only required params', async () => {
-    const responsePromise = client.v1.createCapture({
+    const responsePromise = client.test.createCapture({
       content: 'content',
       projectId: 'projectId',
       type: 'text',
@@ -26,7 +26,7 @@ describe('resource v1', () => {
 
   // Prism tests are disabled
   test.skip('createCapture: required and optional params', async () => {
-    const response = await client.v1.createCapture({
+    const response = await client.test.createCapture({
       content: 'content',
       projectId: 'projectId',
       type: 'text',
@@ -35,7 +35,7 @@ describe('resource v1', () => {
 
   // Prism tests are disabled
   test.skip('listProjects', async () => {
-    const responsePromise = client.v1.listProjects();
+    const responsePromise = client.test.listProjects();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -47,7 +47,7 @@ describe('resource v1', () => {
 
   // Prism tests are disabled
   test.skip('retrieveOpenAPI', async () => {
-    const responsePromise = client.v1.retrieveOpenAPI();
+    const responsePromise = client.test.retrieveOpenAPI();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -59,7 +59,7 @@ describe('resource v1', () => {
 
   // Prism tests are disabled
   test.skip('retrieveUser', async () => {
-    const responsePromise = client.v1.retrieveUser();
+    const responsePromise = client.test.retrieveUser();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -71,7 +71,7 @@ describe('resource v1', () => {
 
   // Prism tests are disabled
   test.skip('searchCaptures: only required params', async () => {
-    const responsePromise = client.v1.searchCaptures({ projectId: 'projectId', query: 'query' });
+    const responsePromise = client.test.searchCaptures({ projectId: 'projectId', query: 'query' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -83,6 +83,6 @@ describe('resource v1', () => {
 
   // Prism tests are disabled
   test.skip('searchCaptures: required and optional params', async () => {
-    const response = await client.v1.searchCaptures({ projectId: 'projectId', query: 'query' });
+    const response = await client.test.searchCaptures({ projectId: 'projectId', query: 'query' });
   });
 });

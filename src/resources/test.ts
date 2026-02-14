@@ -4,32 +4,35 @@ import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
-export class V1 extends APIResource {
+export class Test extends APIResource {
   /**
    * Create a new text, data, or URL capture in a project
    */
-  createCapture(body: V1CreateCaptureParams, options?: RequestOptions): APIPromise<V1CreateCaptureResponse> {
+  createCapture(
+    body: TestCreateCaptureParams,
+    options?: RequestOptions,
+  ): APIPromise<TestCreateCaptureResponse> {
     return this._client.post('/api/v1/capture', { body, ...options });
   }
 
   /**
    * Returns all projects belonging to the authenticated user
    */
-  listProjects(options?: RequestOptions): APIPromise<V1ListProjectsResponse> {
+  listProjects(options?: RequestOptions): APIPromise<TestListProjectsResponse> {
     return this._client.get('/api/v1/projects', options);
   }
 
   /**
    * Auto-generated GET /openapi
    */
-  retrieveOpenAPI(options?: RequestOptions): APIPromise<V1RetrieveOpenAPIResponse> {
+  retrieveOpenAPI(options?: RequestOptions): APIPromise<TestRetrieveOpenAPIResponse> {
     return this._client.get('/api/v1/openapi', options);
   }
 
   /**
    * Returns information about the currently authenticated user
    */
-  retrieveUser(options?: RequestOptions): APIPromise<V1RetrieveUserResponse> {
+  retrieveUser(options?: RequestOptions): APIPromise<TestRetrieveUserResponse> {
     return this._client.get('/api/v1/user', options);
   }
 
@@ -37,21 +40,21 @@ export class V1 extends APIResource {
    * Search for captures within a project using semantic search
    */
   searchCaptures(
-    query: V1SearchCapturesParams,
+    query: TestSearchCapturesParams,
     options?: RequestOptions,
-  ): APIPromise<V1SearchCapturesResponse> {
+  ): APIPromise<TestSearchCapturesResponse> {
     return this._client.get('/api/v1/search', { query, ...options });
   }
 }
 
-export interface V1CreateCaptureResponse {
+export interface TestCreateCaptureResponse {
   success: unknown;
 }
 
-export type V1ListProjectsResponse = Array<V1ListProjectsResponse.V1ListProjectsResponseItem>;
+export type TestListProjectsResponse = Array<TestListProjectsResponse.TestListProjectsResponseItem>;
 
-export namespace V1ListProjectsResponse {
-  export interface V1ListProjectsResponseItem {
+export namespace TestListProjectsResponse {
+  export interface TestListProjectsResponseItem {
     id: string;
 
     name: string;
@@ -60,19 +63,19 @@ export namespace V1ListProjectsResponse {
   }
 }
 
-export interface V1RetrieveOpenAPIResponse {
-  info: V1RetrieveOpenAPIResponse.Info;
+export interface TestRetrieveOpenAPIResponse {
+  info: TestRetrieveOpenAPIResponse.Info;
 
   openapi: string;
 
-  paths: V1RetrieveOpenAPIResponse.Paths;
+  paths: TestRetrieveOpenAPIResponse.Paths;
 
-  servers: Array<V1RetrieveOpenAPIResponse.Server>;
+  servers: Array<TestRetrieveOpenAPIResponse.Server>;
 
-  tags: Array<V1RetrieveOpenAPIResponse.Tag>;
+  tags: Array<TestRetrieveOpenAPIResponse.Tag>;
 }
 
-export namespace V1RetrieveOpenAPIResponse {
+export namespace TestRetrieveOpenAPIResponse {
   export interface Info {
     description: string;
 
@@ -452,7 +455,7 @@ export namespace V1RetrieveOpenAPIResponse {
   }
 }
 
-export interface V1RetrieveUserResponse {
+export interface TestRetrieveUserResponse {
   id: string;
 
   avatar: string;
@@ -468,10 +471,10 @@ export interface V1RetrieveUserResponse {
   theme: string;
 }
 
-export type V1SearchCapturesResponse = Array<V1SearchCapturesResponse.V1SearchCapturesResponseItem>;
+export type TestSearchCapturesResponse = Array<TestSearchCapturesResponse.TestSearchCapturesResponseItem>;
 
-export namespace V1SearchCapturesResponse {
-  export interface V1SearchCapturesResponseItem {
+export namespace TestSearchCapturesResponse {
+  export interface TestSearchCapturesResponseItem {
     captureId: string;
 
     content: string;
@@ -480,7 +483,7 @@ export namespace V1SearchCapturesResponse {
   }
 }
 
-export interface V1CreateCaptureParams {
+export interface TestCreateCaptureParams {
   content: string;
 
   projectId: string;
@@ -488,20 +491,20 @@ export interface V1CreateCaptureParams {
   type: 'text' | 'data' | 'url';
 }
 
-export interface V1SearchCapturesParams {
+export interface TestSearchCapturesParams {
   projectId: string;
 
   query: string;
 }
 
-export declare namespace V1 {
+export declare namespace Test {
   export {
-    type V1CreateCaptureResponse as V1CreateCaptureResponse,
-    type V1ListProjectsResponse as V1ListProjectsResponse,
-    type V1RetrieveOpenAPIResponse as V1RetrieveOpenAPIResponse,
-    type V1RetrieveUserResponse as V1RetrieveUserResponse,
-    type V1SearchCapturesResponse as V1SearchCapturesResponse,
-    type V1CreateCaptureParams as V1CreateCaptureParams,
-    type V1SearchCapturesParams as V1SearchCapturesParams,
+    type TestCreateCaptureResponse as TestCreateCaptureResponse,
+    type TestListProjectsResponse as TestListProjectsResponse,
+    type TestRetrieveOpenAPIResponse as TestRetrieveOpenAPIResponse,
+    type TestRetrieveUserResponse as TestRetrieveUserResponse,
+    type TestSearchCapturesResponse as TestSearchCapturesResponse,
+    type TestCreateCaptureParams as TestCreateCaptureParams,
+    type TestSearchCapturesParams as TestSearchCapturesParams,
   };
 }

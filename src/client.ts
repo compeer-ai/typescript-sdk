@@ -17,15 +17,15 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import {
-  V1,
-  V1CreateCaptureParams,
-  V1CreateCaptureResponse,
-  V1ListProjectsResponse,
-  V1RetrieveOpenAPIResponse,
-  V1RetrieveUserResponse,
-  V1SearchCapturesParams,
-  V1SearchCapturesResponse,
-} from './resources/v1';
+  Test,
+  TestCreateCaptureParams,
+  TestCreateCaptureResponse,
+  TestListProjectsResponse,
+  TestRetrieveOpenAPIResponse,
+  TestRetrieveUserResponse,
+  TestSearchCapturesParams,
+  TestSearchCapturesResponse,
+} from './resources/test';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -736,22 +736,22 @@ export class Barque {
 
   static toFile = Uploads.toFile;
 
-  v1: API.V1 = new API.V1(this);
+  test: API.Test = new API.Test(this);
 }
 
-Barque.V1 = V1;
+Barque.Test = Test;
 
 export declare namespace Barque {
   export type RequestOptions = Opts.RequestOptions;
 
   export {
-    V1 as V1,
-    type V1CreateCaptureResponse as V1CreateCaptureResponse,
-    type V1ListProjectsResponse as V1ListProjectsResponse,
-    type V1RetrieveOpenAPIResponse as V1RetrieveOpenAPIResponse,
-    type V1RetrieveUserResponse as V1RetrieveUserResponse,
-    type V1SearchCapturesResponse as V1SearchCapturesResponse,
-    type V1CreateCaptureParams as V1CreateCaptureParams,
-    type V1SearchCapturesParams as V1SearchCapturesParams,
+    Test as Test,
+    type TestCreateCaptureResponse as TestCreateCaptureResponse,
+    type TestListProjectsResponse as TestListProjectsResponse,
+    type TestRetrieveOpenAPIResponse as TestRetrieveOpenAPIResponse,
+    type TestRetrieveUserResponse as TestRetrieveUserResponse,
+    type TestSearchCapturesResponse as TestSearchCapturesResponse,
+    type TestCreateCaptureParams as TestCreateCaptureParams,
+    type TestSearchCapturesParams as TestSearchCapturesParams,
   };
 }
