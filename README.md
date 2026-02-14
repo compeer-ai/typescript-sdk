@@ -29,7 +29,7 @@ const client = new Barque({
   apiKey: process.env['BARQUE_API_KEY'], // This is the default and can be omitted
 });
 
-const response = await client.v1.retrieveOpenAPI();
+const response = await client.test.retrieveOpenAPI();
 
 console.log(response.info);
 ```
@@ -46,7 +46,7 @@ const client = new Barque({
   apiKey: process.env['BARQUE_API_KEY'], // This is the default and can be omitted
 });
 
-const response: Barque.V1RetrieveOpenAPIResponse = await client.v1.retrieveOpenAPI();
+const response: Barque.TestRetrieveOpenAPIResponse = await client.test.retrieveOpenAPI();
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -59,7 +59,7 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const response = await client.v1.retrieveOpenAPI().catch(async (err) => {
+const response = await client.test.retrieveOpenAPI().catch(async (err) => {
   if (err instanceof Barque.APIError) {
     console.log(err.status); // 400
     console.log(err.name); // BadRequestError
@@ -99,7 +99,7 @@ const client = new Barque({
 });
 
 // Or, configure per-request:
-await client.v1.retrieveOpenAPI({
+await client.test.retrieveOpenAPI({
   maxRetries: 5,
 });
 ```
@@ -116,7 +116,7 @@ const client = new Barque({
 });
 
 // Override per-request:
-await client.v1.retrieveOpenAPI({
+await client.test.retrieveOpenAPI({
   timeout: 5 * 1000,
 });
 ```
@@ -139,11 +139,11 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 ```ts
 const client = new Barque();
 
-const response = await client.v1.retrieveOpenAPI().asResponse();
+const response = await client.test.retrieveOpenAPI().asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: response, response: raw } = await client.v1.retrieveOpenAPI().withResponse();
+const { data: response, response: raw } = await client.test.retrieveOpenAPI().withResponse();
 console.log(raw.headers.get('X-My-Header'));
 console.log(response.info);
 ```
@@ -225,7 +225,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.v1.retrieveOpenAPI({
+client.test.retrieveOpenAPI({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',
