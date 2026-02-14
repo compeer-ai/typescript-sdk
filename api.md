@@ -1,17 +1,21 @@
-# Test
+# Projects
 
 Types:
 
-- <code><a href="./src/resources/test.ts">TestCreateCaptureResponse</a></code>
-- <code><a href="./src/resources/test.ts">TestListProjectsResponse</a></code>
-- <code><a href="./src/resources/test.ts">TestRetrieveOpenAPIResponse</a></code>
-- <code><a href="./src/resources/test.ts">TestRetrieveUserResponse</a></code>
-- <code><a href="./src/resources/test.ts">TestSearchCapturesResponse</a></code>
+- <code><a href="./src/resources/projects.ts">ProjectReadAllResponse</a></code>
 
 Methods:
 
-- <code title="post /api/v1/capture">client.test.<a href="./src/resources/test.ts">createCapture</a>({ ...params }) -> TestCreateCaptureResponse</code>
-- <code title="get /api/v1/projects">client.test.<a href="./src/resources/test.ts">listProjects</a>() -> TestListProjectsResponse</code>
-- <code title="get /api/v1/openapi">client.test.<a href="./src/resources/test.ts">retrieveOpenAPI</a>() -> TestRetrieveOpenAPIResponse</code>
-- <code title="get /api/v1/user">client.test.<a href="./src/resources/test.ts">retrieveUser</a>() -> TestRetrieveUserResponse</code>
-- <code title="get /api/v1/search">client.test.<a href="./src/resources/test.ts">searchCaptures</a>({ ...params }) -> TestSearchCapturesResponse</code>
+- <code title="get /api/v1/projects">client.projects.<a href="./src/resources/projects.ts">readAll</a>() -> ProjectReadAllResponse</code>
+
+# Captures
+
+Types:
+
+- <code><a href="./src/resources/captures.ts">CaptureCreateResponse</a></code>
+- <code><a href="./src/resources/captures.ts">CaptureSearchResponse</a></code>
+
+Methods:
+
+- <code title="post /api/v1/capture">client.captures.<a href="./src/resources/captures.ts">create</a>({ ...params }) -> CaptureCreateResponse</code>
+- <code title="get /api/v1/search">client.captures.<a href="./src/resources/captures.ts">search</a>({ ...params }) -> CaptureSearchResponse</code>
