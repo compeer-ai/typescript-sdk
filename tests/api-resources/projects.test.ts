@@ -8,7 +8,7 @@ const client = new Barque({
 });
 
 describe('resource projects', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('readAll', async () => {
     const responsePromise = client.projects.readAll();
     const rawResponse = await responsePromise.asResponse();

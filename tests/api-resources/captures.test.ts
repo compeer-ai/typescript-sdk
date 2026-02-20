@@ -8,7 +8,7 @@ const client = new Barque({
 });
 
 describe('resource captures', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.captures.create({
       content: 'content',
@@ -24,7 +24,7 @@ describe('resource captures', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.captures.create({
       content: 'content',
@@ -33,7 +33,7 @@ describe('resource captures', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('search: only required params', async () => {
     const responsePromise = client.captures.search({ projectId: 'projectId', query: 'query' });
     const rawResponse = await responsePromise.asResponse();
@@ -45,7 +45,7 @@ describe('resource captures', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('search: required and optional params', async () => {
     const response = await client.captures.search({ projectId: 'projectId', query: 'query' });
   });
