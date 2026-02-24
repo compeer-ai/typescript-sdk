@@ -60,7 +60,7 @@ $ yarn link barque
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global barque
+$ pnpm link --global barque
 ```
 
 ## Running tests
