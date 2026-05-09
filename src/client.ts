@@ -18,10 +18,8 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import { Alive, AliveCheckResponse } from './resources/alive';
-import { Backup, BackupRetrieveResponse } from './resources/backup';
 import { Capture, CaptureCreateParams, CaptureCreateResponse } from './resources/capture';
-import { Oidc, OidcRetrieveResponse } from './resources/oidc';
-import { Search, SearchGetStoresParams, SearchGetStoresResponse } from './resources/search';
+import { Search, SearchQueryParams, SearchQueryResponse } from './resources/search';
 import { StoreListResponse, Stores } from './resources/stores';
 import { WorkspaceListResponse, Workspaces } from './resources/workspaces';
 import { type Fetch } from './internal/builtin-types';
@@ -42,6 +40,8 @@ export interface ClientOptions {
    * Defaults to process.env['BARQUE_API_KEY'].
    */
   apiKey?: string | null | undefined;
+
+  bearerToken?: string | null | undefined;
 
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
@@ -117,6 +117,7 @@ export interface ClientOptions {
  */
 export class Compeer {
   apiKey: string | null;
+  bearerToken: string | null;
 
   baseURL: string;
   maxRetries: number;
@@ -134,7 +135,8 @@ export class Compeer {
    * API Client for interfacing with the Compeer API.
    *
    * @param {string | null | undefined} [opts.apiKey=process.env['BARQUE_API_KEY'] ?? null]
-   * @param {string} [opts.baseURL=process.env['COMPEER_BASE_URL'] ?? http://localhost:3000] - Override the default base URL for the API.
+   * @param {string | null | undefined} [opts.bearerToken]
+   * @param {string} [opts.baseURL=process.env['COMPEER_BASE_URL'] ?? http://localhost:3000/api/v1] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
    * @param {Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
@@ -145,12 +147,14 @@ export class Compeer {
   constructor({
     baseURL = readEnv('COMPEER_BASE_URL'),
     apiKey = readEnv('BARQUE_API_KEY') ?? null,
+    bearerToken = null,
     ...opts
   }: ClientOptions = {}) {
     const options: ClientOptions = {
       apiKey,
+      bearerToken,
       ...opts,
-      baseURL: baseURL || `http://localhost:3000`,
+      baseURL: baseURL || `http://localhost:3000/api/v1`,
     };
 
     this.baseURL = options.baseURL!;
@@ -183,6 +187,7 @@ export class Compeer {
     this._options = options;
 
     this.apiKey = apiKey;
+    this.bearerToken = bearerToken;
   }
 
   /**
@@ -199,6 +204,7 @@ export class Compeer {
       fetch: this.fetch,
       fetchOptions: this.fetchOptions,
       apiKey: this.apiKey,
+      bearerToken: this.bearerToken,
       ...options,
     });
     return client;
@@ -208,7 +214,7 @@ export class Compeer {
    * Check whether the base URL is set to its default.
    */
   #baseURLOverridden(): boolean {
-    return this.baseURL !== 'http://localhost:3000';
+    return this.baseURL !== 'http://localhost:3000/api/v1';
   }
 
   protected defaultQuery(): Record<string, string | undefined> | undefined {
@@ -216,23 +222,41 @@ export class Compeer {
   }
 
   protected validateHeaders({ values, nulls }: NullableHeaders) {
-    if (this.apiKey && values.get('authorization')) {
+    if (this.bearerToken && values.get('authorization')) {
       return;
     }
     if (nulls.has('authorization')) {
       return;
     }
 
+    if (this.apiKey && values.get('x-api-key')) {
+      return;
+    }
+    if (nulls.has('x-api-key')) {
+      return;
+    }
+
     throw new Error(
-      'Could not resolve authentication method. Expected the apiKey to be set. Or for the "Authorization" headers to be explicitly omitted',
+      'Could not resolve authentication method. Expected either bearerToken or apiKey to be set. Or for one of the "Authorization" or "X-Api-key" headers to be explicitly omitted',
     );
   }
 
   protected async authHeaders(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
+    return buildHeaders([await this.bearerAuth(opts), await this.apiKeyAuth(opts)]);
+  }
+
+  protected async bearerAuth(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
+    if (this.bearerToken == null) {
+      return undefined;
+    }
+    return buildHeaders([{ Authorization: `Bearer ${this.bearerToken}` }]);
+  }
+
+  protected async apiKeyAuth(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
     if (this.apiKey == null) {
       return undefined;
     }
-    return buildHeaders([{ Authorization: `Bearer ${this.apiKey}` }]);
+    return buildHeaders([{ 'X-Api-key': this.apiKey }]);
   }
 
   /**
@@ -743,8 +767,6 @@ export class Compeer {
   static toFile = Uploads.toFile;
 
   alive: API.Alive = new API.Alive(this);
-  oidc: API.Oidc = new API.Oidc(this);
-  backup: API.Backup = new API.Backup(this);
   stores: API.Stores = new API.Stores(this);
   search: API.Search = new API.Search(this);
   workspaces: API.Workspaces = new API.Workspaces(this);
@@ -752,8 +774,6 @@ export class Compeer {
 }
 
 Compeer.Alive = Alive;
-Compeer.Oidc = Oidc;
-Compeer.Backup = Backup;
 Compeer.Stores = Stores;
 Compeer.Search = Search;
 Compeer.Workspaces = Workspaces;
@@ -764,16 +784,12 @@ export declare namespace Compeer {
 
   export { Alive as Alive, type AliveCheckResponse as AliveCheckResponse };
 
-  export { Oidc as Oidc, type OidcRetrieveResponse as OidcRetrieveResponse };
-
-  export { Backup as Backup, type BackupRetrieveResponse as BackupRetrieveResponse };
-
   export { Stores as Stores, type StoreListResponse as StoreListResponse };
 
   export {
     Search as Search,
-    type SearchGetStoresResponse as SearchGetStoresResponse,
-    type SearchGetStoresParams as SearchGetStoresParams,
+    type SearchQueryResponse as SearchQueryResponse,
+    type SearchQueryParams as SearchQueryParams,
   };
 
   export { Workspaces as Workspaces, type WorkspaceListResponse as WorkspaceListResponse };
