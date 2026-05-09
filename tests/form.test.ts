@@ -1,5 +1,5 @@
-import { multipartFormRequestOptions, createForm } from 'barque/internal/uploads';
-import { toFile } from 'barque/core/uploads';
+import { multipartFormRequestOptions, createForm } from 'compeer/internal/uploads';
+import { toFile } from 'compeer/core/uploads';
 
 describe('form data validation', () => {
   test('valid values do not error', async () => {

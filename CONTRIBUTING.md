@@ -55,12 +55,12 @@ $ cd barque-typescript
 # With yarn
 $ yarn link
 $ cd ../my-package
-$ yarn link barque
+$ yarn link compeer
 
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link --global barque
+$ pnpm link --global compeer
 ```
 
 ## Running tests

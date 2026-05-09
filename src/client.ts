@@ -17,14 +17,13 @@ import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
-import {
-  CaptureCreateParams,
-  CaptureCreateResponse,
-  CaptureSearchParams,
-  CaptureSearchResponse,
-  Captures,
-} from './resources/captures';
-import { ProjectReadAllResponse, Projects } from './resources/projects';
+import { Alive, AliveCheckResponse } from './resources/alive';
+import { Backup, BackupRetrieveResponse } from './resources/backup';
+import { Capture, CaptureCreateParams, CaptureCreateResponse } from './resources/capture';
+import { Oidc, OidcRetrieveResponse } from './resources/oidc';
+import { Search, SearchGetStoresParams, SearchGetStoresResponse } from './resources/search';
+import { StoreListResponse, Stores } from './resources/stores';
+import { WorkspaceListResponse, Workspaces } from './resources/workspaces';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -47,7 +46,7 @@ export interface ClientOptions {
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
    *
-   * Defaults to process.env['BARQUE_BASE_URL'].
+   * Defaults to process.env['COMPEER_BASE_URL'].
    */
   baseURL?: string | null | undefined;
 
@@ -101,7 +100,7 @@ export interface ClientOptions {
   /**
    * Set the log level.
    *
-   * Defaults to process.env['BARQUE_LOG'] or 'warn' if it isn't set.
+   * Defaults to process.env['COMPEER_LOG'] or 'warn' if it isn't set.
    */
   logLevel?: LogLevel | undefined;
 
@@ -114,9 +113,9 @@ export interface ClientOptions {
 }
 
 /**
- * API Client for interfacing with the Barque API.
+ * API Client for interfacing with the Compeer API.
  */
-export class Barque {
+export class Compeer {
   apiKey: string | null;
 
   baseURL: string;
@@ -132,10 +131,10 @@ export class Barque {
   private _options: ClientOptions;
 
   /**
-   * API Client for interfacing with the Barque API.
+   * API Client for interfacing with the Compeer API.
    *
    * @param {string | null | undefined} [opts.apiKey=process.env['BARQUE_API_KEY'] ?? null]
-   * @param {string} [opts.baseURL=process.env['BARQUE_BASE_URL'] ?? https://barque.ai/api/v1] - Override the default base URL for the API.
+   * @param {string} [opts.baseURL=process.env['COMPEER_BASE_URL'] ?? http://localhost:3000] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
    * @param {Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
@@ -144,32 +143,32 @@ export class Barque {
    * @param {Record<string, string | undefined>} opts.defaultQuery - Default query parameters to include with every request to the API.
    */
   constructor({
-    baseURL = readEnv('BARQUE_BASE_URL'),
+    baseURL = readEnv('COMPEER_BASE_URL'),
     apiKey = readEnv('BARQUE_API_KEY') ?? null,
     ...opts
   }: ClientOptions = {}) {
     const options: ClientOptions = {
       apiKey,
       ...opts,
-      baseURL: baseURL || `https://barque.ai/api/v1`,
+      baseURL: baseURL || `http://localhost:3000`,
     };
 
     this.baseURL = options.baseURL!;
-    this.timeout = options.timeout ?? Barque.DEFAULT_TIMEOUT /* 1 minute */;
+    this.timeout = options.timeout ?? Compeer.DEFAULT_TIMEOUT /* 1 minute */;
     this.logger = options.logger ?? console;
     const defaultLogLevel = 'warn';
     // Set default logLevel early so that we can log a warning in parseLogLevel.
     this.logLevel = defaultLogLevel;
     this.logLevel =
       parseLogLevel(options.logLevel, 'ClientOptions.logLevel', this) ??
-      parseLogLevel(readEnv('BARQUE_LOG'), "process.env['BARQUE_LOG']", this) ??
+      parseLogLevel(readEnv('COMPEER_LOG'), "process.env['COMPEER_LOG']", this) ??
       defaultLogLevel;
     this.fetchOptions = options.fetchOptions;
     this.maxRetries = options.maxRetries ?? 2;
     this.fetch = options.fetch ?? Shims.getDefaultFetch();
     this.#encoder = Opts.FallbackEncoder;
 
-    const customHeadersEnv = readEnv('BARQUE_CUSTOM_HEADERS');
+    const customHeadersEnv = readEnv('COMPEER_CUSTOM_HEADERS');
     if (customHeadersEnv) {
       const parsed: Record<string, string> = {};
       for (const line of customHeadersEnv.split('\n')) {
@@ -209,7 +208,7 @@ export class Barque {
    * Check whether the base URL is set to its default.
    */
   #baseURLOverridden(): boolean {
-    return this.baseURL !== 'https://barque.ai/api/v1';
+    return this.baseURL !== 'http://localhost:3000';
   }
 
   protected defaultQuery(): Record<string, string | undefined> | undefined {
@@ -724,10 +723,10 @@ export class Barque {
     }
   }
 
-  static Barque = this;
+  static Compeer = this;
   static DEFAULT_TIMEOUT = 60000; // 1 minute
 
-  static BarqueError = Errors.BarqueError;
+  static CompeerError = Errors.CompeerError;
   static APIError = Errors.APIError;
   static APIConnectionError = Errors.APIConnectionError;
   static APIConnectionTimeoutError = Errors.APIConnectionTimeoutError;
@@ -743,23 +742,45 @@ export class Barque {
 
   static toFile = Uploads.toFile;
 
-  projects: API.Projects = new API.Projects(this);
-  captures: API.Captures = new API.Captures(this);
+  alive: API.Alive = new API.Alive(this);
+  oidc: API.Oidc = new API.Oidc(this);
+  backup: API.Backup = new API.Backup(this);
+  stores: API.Stores = new API.Stores(this);
+  search: API.Search = new API.Search(this);
+  workspaces: API.Workspaces = new API.Workspaces(this);
+  capture: API.Capture = new API.Capture(this);
 }
 
-Barque.Projects = Projects;
-Barque.Captures = Captures;
+Compeer.Alive = Alive;
+Compeer.Oidc = Oidc;
+Compeer.Backup = Backup;
+Compeer.Stores = Stores;
+Compeer.Search = Search;
+Compeer.Workspaces = Workspaces;
+Compeer.Capture = Capture;
 
-export declare namespace Barque {
+export declare namespace Compeer {
   export type RequestOptions = Opts.RequestOptions;
 
-  export { Projects as Projects, type ProjectReadAllResponse as ProjectReadAllResponse };
+  export { Alive as Alive, type AliveCheckResponse as AliveCheckResponse };
+
+  export { Oidc as Oidc, type OidcRetrieveResponse as OidcRetrieveResponse };
+
+  export { Backup as Backup, type BackupRetrieveResponse as BackupRetrieveResponse };
+
+  export { Stores as Stores, type StoreListResponse as StoreListResponse };
 
   export {
-    Captures as Captures,
+    Search as Search,
+    type SearchGetStoresResponse as SearchGetStoresResponse,
+    type SearchGetStoresParams as SearchGetStoresParams,
+  };
+
+  export { Workspaces as Workspaces, type WorkspaceListResponse as WorkspaceListResponse };
+
+  export {
+    Capture as Capture,
     type CaptureCreateResponse as CaptureCreateResponse,
-    type CaptureSearchResponse as CaptureSearchResponse,
     type CaptureCreateParams as CaptureCreateParams,
-    type CaptureSearchParams as CaptureSearchParams,
   };
 }

@@ -1,6 +1,6 @@
 import fs from 'fs';
-import type { ResponseLike } from 'barque/internal/to-file';
-import { toFile } from 'barque/core/uploads';
+import type { ResponseLike } from 'compeer/internal/to-file';
+import { toFile } from 'compeer/core/uploads';
 import { File } from 'node:buffer';
 
 class MyClass {
@@ -97,7 +97,7 @@ describe('missing File error message', () => {
   });
 
   test('is thrown', async () => {
-    const uploads = await import('barque/core/uploads');
+    const uploads = await import('compeer/core/uploads');
     await expect(
       uploads.toFile(mockResponse({ url: 'https://example.com/my/audio.mp3' })),
     ).rejects.toMatchInlineSnapshot(

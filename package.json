@@ -1,8 +1,8 @@
 {
-  "name": "barque",
+  "name": "compeer",
   "version": "0.0.1",
-  "description": "The official TypeScript library for the Barque API",
-  "author": "Barque <>",
+  "description": "The official TypeScript library for the Compeer API",
+  "author": "Compeer <help@compeer.dev>",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "type": "commonjs",
