@@ -26,7 +26,7 @@ The full API of this library can be found in [api.md](api.md).
 import Compeer from 'compeer';
 
 const client = new Compeer({
-  apiKey: process.env['BARQUE_API_KEY'], // This is the default and can be omitted
+  bearerToken: 'My Bearer Token',
 });
 
 const response = await client.alive.check();
@@ -43,7 +43,7 @@ This library includes TypeScript definitions for all request params and response
 import Compeer from 'compeer';
 
 const client = new Compeer({
-  apiKey: process.env['BARQUE_API_KEY'], // This is the default and can be omitted
+  bearerToken: 'My Bearer Token',
 });
 
 const response: Compeer.AliveCheckResponse = await client.alive.check();

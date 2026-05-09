@@ -9,30 +9,27 @@ export class Search extends APIResource {
   /**
    * Get a workspace's stores
    */
-  getStores(
+  query(
     workspace: string,
-    query: SearchGetStoresParams,
+    query: SearchQueryParams,
     options?: RequestOptions,
-  ): APIPromise<SearchGetStoresResponse> {
+  ): APIPromise<SearchQueryResponse> {
     return this._client.get(path`/${workspace}/search`, { query, ...options });
   }
 }
 
-export interface SearchGetStoresResponse {
+export interface SearchQueryResponse {
   captureId: string;
 
   content: string;
 }
 
-export interface SearchGetStoresParams {
+export interface SearchQueryParams {
   query: string;
 
   store?: string;
 }
 
 export declare namespace Search {
-  export {
-    type SearchGetStoresResponse as SearchGetStoresResponse,
-    type SearchGetStoresParams as SearchGetStoresParams,
-  };
+  export { type SearchQueryResponse as SearchQueryResponse, type SearchQueryParams as SearchQueryParams };
 }

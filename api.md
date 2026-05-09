@@ -8,26 +8,6 @@ Methods:
 
 - <code title="get /alive">client.alive.<a href="./src/resources/alive.ts">check</a>() -> AliveCheckResponse</code>
 
-# Oidc
-
-Types:
-
-- <code><a href="./src/resources/oidc.ts">OidcRetrieveResponse</a></code>
-
-Methods:
-
-- <code title="get /oidc">client.oidc.<a href="./src/resources/oidc.ts">retrieve</a>() -> OidcRetrieveResponse</code>
-
-# Backup
-
-Types:
-
-- <code><a href="./src/resources/backup.ts">BackupRetrieveResponse</a></code>
-
-Methods:
-
-- <code title="get /backup">client.backup.<a href="./src/resources/backup.ts">retrieve</a>() -> BackupRetrieveResponse</code>
-
 # Stores
 
 Types:
@@ -42,11 +22,11 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/search.ts">SearchGetStoresResponse</a></code>
+- <code><a href="./src/resources/search.ts">SearchQueryResponse</a></code>
 
 Methods:
 
-- <code title="get /{workspace}/search">client.search.<a href="./src/resources/search.ts">getStores</a>(workspace, { ...params }) -> SearchGetStoresResponse</code>
+- <code title="get /{workspace}/search">client.search.<a href="./src/resources/search.ts">query</a>(workspace, { ...params }) -> SearchQueryResponse</code>
 
 # Workspaces
 
