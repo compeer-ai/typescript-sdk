@@ -8,8 +8,8 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "paths": {
-      "compeer/*": ["./src/*"],
-      "compeer": ["./src/index.ts"]
+      "@compeer-ai/sdk/*": ["./src/*"],
+      "@compeer-ai/sdk": ["./src/index.ts"]
     },
     "noEmit": true,
 

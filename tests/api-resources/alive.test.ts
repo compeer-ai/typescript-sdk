@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Compeer from 'compeer';
+import Compeer from '@compeer-ai/sdk';
 
 const client = new Compeer({
   bearerToken: 'My Bearer Token',
