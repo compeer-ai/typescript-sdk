@@ -5,8 +5,8 @@
   "compilerOptions": {
     "rootDir": "./dist/src",
     "paths": {
-      "barque/*": ["./dist/src/*"],
-      "barque": ["./dist/src/index.ts"]
+      "compeer/*": ["./dist/src/*"],
+      "compeer": ["./dist/src/index.ts"]
     },
     "noEmit": false,
     "declaration": true,

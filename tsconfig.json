@@ -8,8 +8,8 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "paths": {
-      "barque/*": ["./src/*"],
-      "barque": ["./src/index.ts"]
+      "compeer/*": ["./src/*"],
+      "compeer": ["./src/index.ts"]
     },
     "noEmit": true,
 

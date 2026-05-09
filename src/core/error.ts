@@ -2,13 +2,13 @@
 
 import { castToError } from '../internal/errors';
 
-export class BarqueError extends Error {}
+export class CompeerError extends Error {}
 
 export class APIError<
   TStatus extends number | undefined = number | undefined,
   THeaders extends Headers | undefined = Headers | undefined,
   TError extends Object | undefined = Object | undefined,
-> extends BarqueError {
+> extends CompeerError {
   /** HTTP status for the response that caused the error */
   readonly status: TStatus;
   /** HTTP headers for the response that caused the error */
