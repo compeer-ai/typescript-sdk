@@ -37,7 +37,7 @@ import { isEmptyObj } from './internal/utils/values';
 
 export interface ClientOptions {
   /**
-   * Defaults to process.env['BARQUE_API_KEY'].
+   * Defaults to process.env['COMPEER_APIKEY'].
    */
   apiKey?: string | null | undefined;
 
@@ -134,7 +134,7 @@ export class Compeer {
   /**
    * API Client for interfacing with the Compeer API.
    *
-   * @param {string | null | undefined} [opts.apiKey=process.env['BARQUE_API_KEY'] ?? null]
+   * @param {string | null | undefined} [opts.apiKey=process.env['COMPEER_APIKEY'] ?? null]
    * @param {string | null | undefined} [opts.bearerToken]
    * @param {string} [opts.baseURL=process.env['COMPEER_BASE_URL'] ?? http://localhost:3000/api/v1] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
@@ -146,7 +146,7 @@ export class Compeer {
    */
   constructor({
     baseURL = readEnv('COMPEER_BASE_URL'),
-    apiKey = readEnv('BARQUE_API_KEY') ?? null,
+    apiKey = readEnv('COMPEER_APIKEY') ?? null,
     bearerToken = null,
     ...opts
   }: ClientOptions = {}) {
