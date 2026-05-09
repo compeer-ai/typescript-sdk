@@ -1,5 +1,5 @@
 {
-  "name": "compeer",
+  "name": "@compeer-ai/sdk",
   "version": "0.0.1",
   "description": "The official TypeScript library for the Compeer API",
   "author": "Compeer <help@compeer.dev>",

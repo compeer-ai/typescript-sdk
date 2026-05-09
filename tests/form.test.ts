@@ -1,5 +1,5 @@
-import { multipartFormRequestOptions, createForm } from 'compeer/internal/uploads';
-import { toFile } from 'compeer/core/uploads';
+import { multipartFormRequestOptions, createForm } from '@compeer-ai/sdk/internal/uploads';
+import { toFile } from '@compeer-ai/sdk/core/uploads';
 
 describe('form data validation', () => {
   test('valid values do not error', async () => {

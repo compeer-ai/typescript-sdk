@@ -5,8 +5,8 @@
   "compilerOptions": {
     "rootDir": "./dist/src",
     "paths": {
-      "compeer/*": ["./dist/src/*"],
-      "compeer": ["./dist/src/index.ts"]
+      "@compeer-ai/sdk/*": ["./dist/src/*"],
+      "@compeer-ai/sdk": ["./dist/src/index.ts"]
     },
     "noEmit": false,
     "declaration": true,

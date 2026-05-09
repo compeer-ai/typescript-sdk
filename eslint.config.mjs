@@ -22,7 +22,7 @@ export default tseslint.config(
         {
           patterns: [
             {
-              regex: '^compeer(/.*)?',
+              regex: '^@compeer-ai/sdk(/.*)?',
               message: 'Use a relative import, not a package import.',
             },
           ],
