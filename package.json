@@ -1,6 +1,6 @@
 {
   "name": "@compeer-ai/sdk",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "The official TypeScript library for the Compeer API",
   "author": "Compeer <help@compeer.dev>",
   "types": "dist/index.d.ts",

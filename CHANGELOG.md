@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.1.1 (2026-06-17)
+
+Full Changelog: [v0.1.0...v0.1.1](https://github.com/compeer-ai/typescript-sdk/compare/v0.1.0...v0.1.1)
+
+### Bug Fixes
+
+* **client:** send content-type header for requests with an omitted optional body ([495ad78](https://github.com/compeer-ai/typescript-sdk/commit/495ad78e8d8b69c94aeb8d81d036a8be812540ba))
+* **typescript:** upgrade tsc-multi so that it works with Node 26 ([8090dd2](https://github.com/compeer-ai/typescript-sdk/commit/8090dd2423d48bd8038748506637612ba5e7cdce))
+
+
+### Chores
+
+* **tests:** remove redundant File import ([06d9802](https://github.com/compeer-ai/typescript-sdk/commit/06d9802d2fd49f0b5944fbdfc39ae3d74df08e35))
+
 ## 0.1.0 (2026-05-09)
 
 Full Changelog: [v0.0.1...v0.1.0](https://github.com/compeer-ai/typescript-sdk/compare/v0.0.1...v0.1.0)
